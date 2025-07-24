@@ -88,3 +88,25 @@ celerybeat-schedule
 # dotenv
 .env
 .env.*
+
+
+# PyCharm (IntelliJ IDEA) specific files
+.idea/
+*.iml
+
+# Visual Studio Code specific files
+.vscode/
+*.code-workspace
+
+# Linter cache directories
+# PyLint
+.pylint.d/
+
+# Flake8
+.flake8
+
+# Pylint cache
+.pylint.cache
+
+# Mypy cache
+.mypy_cache/
