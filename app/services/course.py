@@ -20,26 +20,25 @@ class CourseService:
         new_course = await CourseRepository.create_course(db, course, user_id)
         return new_course
 
-
     @staticmethod
     async def generate_summary(db: AsyncSession, course_id: int) -> Course:
         course = await CourseRepository.get_course_by_id(db, course_id)
         if course is None:
             raise NotFoundErr(f"No course with id {course_id}")
         completion = await client.chat.completions.create(
-        model="gpt-4o-mini",
-        # possiable promt attack
-        messages=[
-            {
-                "role": "system",
-                "content": "You are a helpful assistant that summarizes online courses."
-            },
-            {
-                "role": "user",
-                "content": f"Summarize this online course: {course.course_description}",
-            }
-        ],
-    )
+            model="gpt-4o-mini",
+            # possiable promt attack
+            messages=[
+                {
+                    "role": "system",
+                    "content": "You are a helpful assistant that summarizes online courses.",
+                },
+                {
+                    "role": "user",
+                    "content": f"Summarize this online course: {course.course_description}",
+                },
+            ],
+        )
         summary = completion.choices[0].message.content
         if summary is None or summary == "":
             raise NotFoundErr(f"No summary generated for course with id {course_id}")
